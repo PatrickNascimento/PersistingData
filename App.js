@@ -13,6 +13,7 @@ export default class App extends React.Component {
   
     this.state = {name:'',phone:''};
     this.clearData = this.clearData.bind(this)
+    this.persistData = this.persistData.bind(this)
   }
 
   persistData(){
@@ -20,8 +21,13 @@ export default class App extends React.Component {
       let phone = this.state.phone
       AsyncStorage.setItem('name', name)
       AsyncStorage.setItem('phone', phone)
-      this.setState({name:name,persistedName:name, phone: phone, persistedPhone:phone})
+      this.setState({name:name,persistedName:name, phone: phone, persistedPhone:phone})  
   }
+
+  showData(){
+    // Exibir os dados em uma scrolllist
+  }
+  
 
   check(){
      AsyncStorage.getItem('name').then((name=>{
@@ -40,9 +46,8 @@ export default class App extends React.Component {
 
   clearData(){
       AsyncStorage.clear();
-      this.setState({persistedPhone:'',persistedName:''})
+      this.setState({persistedPhone:'', persistedName:''})
   }
-
   render() {
     return (
       <View style={styles.container}>
@@ -51,20 +56,20 @@ export default class App extends React.Component {
           Persistindo Dados
         </Text>
 
-        <Text>Nome</Text>
+        <Text>Nome...</Text>
 
         <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({name.text})}
-          value={this.state.name}
+          value={this.state.name}          
+          onChangeText={(text) => this.setState({name:text})}
+          style={{height: 40, width: '80%', borderColor: 'gray', borderWidth: 1}}          
         />  
 
         <Text>Phone</Text>
 
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({name.text})}
-          value={this.state.name}
+        <TextInput          
+          value={this.state.phone}
+          onChangeText={(text) => this.setState({phone:text})}
+          style={{height: 40, width: '80%', borderColor: 'gray', borderWidth: 1}}         
         />   
 
         <TouchableHighlight
@@ -80,6 +85,15 @@ export default class App extends React.Component {
           underlayColor="white">
           <Text> LIMPAR DADOS </Text>
         </TouchableHighlight>
+
+         <TouchableHighlight
+          style={styles.button}
+          onPress={this.showData}
+          underlayColor="red">
+          <Text> EXIBE DADOS </Text>
+        </TouchableHighlight> 
+
+        <Text></Text>     
 
       </View>
     );

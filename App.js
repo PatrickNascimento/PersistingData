@@ -24,6 +24,12 @@ export default class App extends React.Component {
       this.setState({name:name,persistedName:name, phone: phone, persistedPhone:phone})  
   }
 
+
+displayData = async () => {
+    let name = await AsyncStorage.getItem('name');
+    alert(name);
+  }
+
   showData(){
     // Exibir os dados em uma scrolllist
   }
@@ -88,12 +94,14 @@ export default class App extends React.Component {
 
          <TouchableHighlight
           style={styles.button}
-          onPress={this.showData}
+          onPress={this.displayData}
           underlayColor="red">
           <Text> EXIBE DADOS </Text>
         </TouchableHighlight> 
 
-        <Text></Text>     
+        <Text>
+          {this.state.name}
+        </Text>     
 
       </View>
     );
